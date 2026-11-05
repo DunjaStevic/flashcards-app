@@ -3,45 +3,40 @@ import Image from "next/image";
 
 
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
 export default function Home() {
   const [count, setCount] = useState(0);
+  const [counterOver20, setCounterOver20] = useState(false);
+
+  useEffect(() => {
+    if (count > 20) {
+      setCounterOver20(count>20);
+    }
+  }, [count]);
 
   return (
      <><div className="bg-blue-500 p-4 text-white">
       GLAVNA STRANICA
     </div><div className="flex min-h-screen flex-col items-center justify-center gap-6">
-        <h1 className="text-3xl font-bold">
-          Moj brojač
-        </h1>
+      
+      <div className="bg-blue-400  text-white">
 
-        <p className="text-5xl font-bold">
-          {count}
-        </p>
+        <p className={"text-[32px]"}>Brojac: {count}</p>
+        <button className={"bg-yellow-400"} onClick={() => setCount(prev => prev + 1)}>Povecaj brojac</button>
+        {
+          counterOver20 && <p className={"text-[32px]"}>Brojac je presao od 20!</p>
+        }
 
-        <div className="flex gap-4">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="rounded bg-green-500 px-6 py-3 text-white"
-          >
-            Povećaj
-          </button>
-
-          <button
-            onClick={() => setCount(count - 1)}
-            className="rounded bg-red-500 px-6 py-3 text-white"
-          >
-            Smanji
-          </button>
-
-          <button
-            onClick={() => setCount(0)}
-            className="rounded bg-gray-500 px-6 py-3 text-white"
-          >
-            Resetuj
-          </button>
-        </div>
+        
+      
+      </div>
+      
+      
+      
       </div></>
+
+    
+
   );
 }
